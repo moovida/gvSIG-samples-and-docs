@@ -52,8 +52,7 @@ public class LandRegistryViewerLocator extends BaseLocator {
     /**
      * Unique instance.
      */
-    private static final LandRegistryViewerLocator INSTANCE =
-        new LandRegistryViewerLocator();
+    private static final LandRegistryViewerLocator INSTANCE = new LandRegistryViewerLocator();
 
     /**
      * Return the singleton instance.
@@ -92,8 +91,7 @@ public class LandRegistryViewerLocator extends BaseLocator {
      * @param clazz
      *            implementing the LandRegistryViewerManager interface
      */
-    public static void registerManager(
-        Class<? extends LandRegistryViewerManager> clazz) {
+    public static void registerManager( Class< ? extends LandRegistryViewerManager> clazz ) {
         getInstance().register(MANAGER_NAME, MANAGER_DESCRIPTION, clazz);
     }
 

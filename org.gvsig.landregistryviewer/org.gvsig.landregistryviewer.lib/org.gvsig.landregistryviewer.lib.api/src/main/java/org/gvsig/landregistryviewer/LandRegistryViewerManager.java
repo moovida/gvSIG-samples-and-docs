@@ -34,21 +34,20 @@ import org.gvsig.fmap.geom.Geometry;
  * {@link LandRegistryViewerBlock}s.
  * 
  * @see LandRegistryViewerBlock
- * @see LandRegistryViewerProperty
+ * @see LandRegistryViewerParcel
  * @author gvSIG team
  * @version $Id$
  */
 public interface LandRegistryViewerManager {
 
-	public void initialize(FeatureStore properties, FeatureStore blocks);
+    public void initialize( FeatureStore parcels, FeatureStore blocks );
 
-	public void initialize(File properties, File blocks);
+    public void initialize( File parcelsFile, File blocksFile );
 
-	public FeatureStore getProperties();
-	
-	public FeatureStore getBlocks();
-    
-    public LandRegistryViewerBlock getBlock(Geometry point)
-        throws LandRegistryViewerException;
+    public FeatureStore getParcels();
+
+    public FeatureStore getBlocks();
+
+    public LandRegistryViewerBlock getBlock( Geometry queryPoint ) throws LandRegistryViewerException;
 
 }

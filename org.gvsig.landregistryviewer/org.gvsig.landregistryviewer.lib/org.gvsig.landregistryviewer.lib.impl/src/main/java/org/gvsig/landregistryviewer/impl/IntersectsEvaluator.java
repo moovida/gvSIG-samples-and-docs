@@ -34,42 +34,34 @@ import org.gvsig.tools.evaluator.EvaluatorException;
 
 public class IntersectsEvaluator extends AbstractEvaluator {
 
-	private Geometry op1geom;
-	private String op2attrname;
-	private String where;
+    private Geometry op1geom;
+    private String op2attrname;
+    private String where;
 
-	public IntersectsEvaluator(String op1attrname, Geometry op2geom) throws GeometryOperationNotSupportedException, GeometryOperationException {
-		this.op1geom = op2geom;
-		this.op2attrname = op1attrname;
-		this.where = MessageFormat.format(
-			" intersects(GeomFromText('{1}','{2}'),{0}) ", 
-			new Object[] {
-				this.op1geom.convertToWKT(),
-				"", // this.op2geom.getCRS()
-				this.op2attrname 
-			}
-		);
-	}
+    public IntersectsEvaluator( String op1attrname, Geometry op2geom )
+            throws GeometryOperationNotSupportedException, GeometryOperationException {
+        this.op1geom = op2geom;
+        this.op2attrname = op1attrname;
+        this.where = MessageFormat.format(" intersects(GeomFromText('{1}','{2}'),{0}) ",
+                new Object[]{this.op1geom.convertToWKT(), "", // this.op2geom.getCRS()
+                        this.op2attrname});
+    }
 
-	public String getName() {
-		return "intersets";
-	}
+    public String getName() {
+        return "intersets";
+    }
 
-	public Object evaluate(EvaluatorData data) throws EvaluatorException {
-		Geometry op1geom = (Geometry) data.getDataValue(this.op2attrname);
-		try {
-			
-			return new Boolean(this.op1geom.intersects(op1geom));
-		
-		} catch (GeometryOperationNotSupportedException e) {
-			throw new EvaluatorException(e);
-		} catch (GeometryOperationException e) {
-			throw new EvaluatorException(e);
-		}
-	}
+    public Object evaluate( EvaluatorData data ) throws EvaluatorException {
+        Geometry op1geom = (Geometry) data.getDataValue(this.op2attrname);
+        try {
+            return new Boolean(this.op1geom.intersects(op1geom));
+        } catch (Exception e) {
+            throw new EvaluatorException(e);
+        }
+    }
 
-	public String getCQL() {
-		return this.where;
-	}
+    public String getCQL() {
+        return this.where;
+    }
 
 }

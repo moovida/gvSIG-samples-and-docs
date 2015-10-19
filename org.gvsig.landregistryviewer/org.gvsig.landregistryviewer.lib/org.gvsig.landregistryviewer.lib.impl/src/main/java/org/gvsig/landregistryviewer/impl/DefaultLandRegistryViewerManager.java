@@ -55,20 +55,19 @@ public class DefaultLandRegistryViewerManager implements LandRegistryViewerManag
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultLandRegistryViewerManager.class);
 
-    private FeatureStore properties;
+    private FeatureStore parcels;
     private FeatureStore blocks;
 
-    public void initialize(FeatureStore properties, FeatureStore blocks) {
-        this.properties = properties;
+    public void initialize( FeatureStore parcels, FeatureStore blocks ) {
+        this.parcels = parcels;
         this.blocks = blocks;
     }
 
-    public void initialize(File properties, File blocks) {
+    public void initialize( File properties, File blocks ) {
         this.initialize(openShape(properties), openShape(blocks));
     }
 
-    public LandRegistryViewerBlock getBlock(Geometry point)
-            throws LandRegistryViewerException {
+    public LandRegistryViewerBlock getBlock( Geometry point ) throws LandRegistryViewerException {
 
         FeatureSet set = null;
         DisposableIterator it = null;
@@ -83,10 +82,7 @@ public class DefaultLandRegistryViewerManager implements LandRegistryViewerManag
             }
             it = set.fastIterator();
             Feature f = (Feature) it.next();
-            LandRegistryViewerBlock block = new DefaultLandRegistryViewerBlock(
-                    this,
-                    f.getGeometry(attrGeomName)
-            );
+            LandRegistryViewerBlock block = new DefaultLandRegistryViewerBlock(this, f.getGeometry(attrGeomName));
             return block;
 
         } catch (DataException e) {
@@ -105,8 +101,8 @@ public class DefaultLandRegistryViewerManager implements LandRegistryViewerManag
         }
     }
 
-    public FeatureStore getProperties() {
-        return this.properties;
+    public FeatureStore getParcels() {
+        return this.parcels;
     }
 
     public FeatureStore getBlocks() {
@@ -120,17 +116,13 @@ public class DefaultLandRegistryViewerManager implements LandRegistryViewerManag
      *
      * @return the feature store
      */
-    private FeatureStore openShape(File shape) {
+    private FeatureStore openShape( File shape ) {
         try {
-
-            DataStoreParameters parameters;
             DataManager manager = DALLocator.getDataManager();
-
-            parameters = manager.createStoreParameters("Shape");
+            DataStoreParameters parameters = manager.createStoreParameters("Shape");
             parameters.setDynValue("shpfile", shape);
             parameters.setDynValue("crs", "EPSG:23030");
             return (FeatureStore) manager.openStore("Shape", parameters);
-
         } catch (InitializeException e) {
             logger.error(e.getMessageStack());
             throw new RuntimeException(e);

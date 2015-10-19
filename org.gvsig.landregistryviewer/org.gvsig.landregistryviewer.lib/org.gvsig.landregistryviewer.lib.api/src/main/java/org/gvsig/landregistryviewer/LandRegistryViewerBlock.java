@@ -23,7 +23,6 @@
  */
 package org.gvsig.landregistryviewer;
 
-import java.util.Date;
 import java.util.List;
 
 import org.gvsig.fmap.geom.Geometry;
@@ -53,6 +52,6 @@ public interface LandRegistryViewerBlock {
      */
     public Geometry getShape();
     
-    public List<LandRegistryViewerProperty> getProperties() throws LandRegistryViewerException;
+    public List<LandRegistryViewerParcel> getParcels() throws LandRegistryViewerException;
 
 }

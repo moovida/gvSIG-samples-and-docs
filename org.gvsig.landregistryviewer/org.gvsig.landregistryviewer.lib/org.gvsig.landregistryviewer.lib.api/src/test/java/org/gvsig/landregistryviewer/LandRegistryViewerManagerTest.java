@@ -37,42 +37,37 @@ import org.slf4j.LoggerFactory;
  * @author gvSIG Team
  * @version $Id$
  */
-public abstract class LandRegistryViewerManagerTest extends
-		AbstractLibraryAutoInitTestCase {
+public abstract class LandRegistryViewerManagerTest extends AbstractLibraryAutoInitTestCase {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(LandRegistryViewerManagerTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(LandRegistryViewerManagerTest.class);
 
-	protected LandRegistryViewerManager manager;
+    protected LandRegistryViewerManager manager;
 
-	private File getResource(String pathname) {
-		URL res = this.getClass().getClassLoader().getResource(pathname);
-		return new File(res.getPath());
-	}
+    private File getResource( String pathname ) {
+        URL res = this.getClass().getClassLoader().getResource(pathname);
+        return new File(res.getPath());
+    }
 
-	@Override
-	protected void doSetUp() throws Exception {
-		manager = LandRegistryViewerLocator.getManager();
-	}
+    @Override
+    protected void doSetUp() throws Exception {
+        manager = LandRegistryViewerLocator.getManager();
+    }
 
-	public void testManagerInitialize() throws Exception {
-		try {
-			manager.initialize(
-					getResource("data/properties.shp"),
-					getResource("data/blocks.shp")
-			);
-		} catch (Exception e) {
-			LOG.error("Can't initialize manager", e);
-			throw e;
-		}
-	}
+    public void testManagerInitialize() throws Exception {
+        try {
+            manager.initialize(getResource("data/properties.shp"), getResource("data/blocks.shp"));
+        } catch (Exception e) {
+            LOG.error("Can't initialize manager", e);
+            throw e;
+        }
+    }
 
-	public void testGetBlock() throws Exception {
-		// TODO
-	}
+    public void testGetBlock() throws Exception {
+        // TODO
+    }
 
-	public void testGetProperties() throws Exception {
-		// TODO
-	}
+    public void testGetProperties() throws Exception {
+        // TODO
+    }
 
 }

@@ -59,8 +59,7 @@ import org.gvsig.tools.i18n.I18nManager;
  */
 public class LandRegistryViewerExtension extends Extension {
 
-    private static final Logger logger
-            = LoggerFactory.getLogger(LandRegistryViewerExtension.class);
+    private static final Logger logger = LoggerFactory.getLogger(LandRegistryViewerExtension.class);
 
     private static final String MY_VIEW_NAME = "_Land_registry_viewer";
 
@@ -72,7 +71,7 @@ public class LandRegistryViewerExtension extends Extension {
     private IView viewWindow;
 
     public void initialize() {
-        PluginsManager manager = PluginsLocator.getManager();
+        // PluginsManager manager = PluginsLocator.getManager();
         IconThemeHelper.registerIcon("action", "view-show-land-regisytry-information", this);
     }
 
@@ -90,9 +89,9 @@ public class LandRegistryViewerExtension extends Extension {
     /**
      * Execute the actions associated to this extension.
      */
-    public void execute(String actionCommand) {
+    public void execute( String actionCommand ) {
         if (ACTION_SETINFOTOOL.equalsIgnoreCase(actionCommand)) {
-		    // Set the tool in the mapcontrol of the active view.
+            // Set the tool in the mapcontrol of the active view.
 
             ApplicationManager application = ApplicationLocator.getManager();
 
@@ -107,7 +106,7 @@ public class LandRegistryViewerExtension extends Extension {
      * Check if tools of this extension are enabled.
      */
     public boolean isEnabled() {
-    	//
+        //
         // By default the tool is always enabled
         //
         return true;
@@ -117,7 +116,7 @@ public class LandRegistryViewerExtension extends Extension {
      * Check if tools of this extension are visible.
      */
     public boolean isVisible() {
-    	//
+        //
         // The tool is visible only when our view is active
         //
 
@@ -143,11 +142,11 @@ public class LandRegistryViewerExtension extends Extension {
         view.setName(i18nManager.getTranslation(MY_VIEW_NAME));
         // Setting view's projection to shapefile's known CRS
         view.getMapContext().setProjection(CRSFactory.getCRS("EPSG:23030"));
-        
+
         // 2. Create a new layer with the blocks
-        FLyrVect layer = (FLyrVect) application.getMapContextManager().createLayer(
-                i18nManager.getTranslation("_Blocks"), this.manager.getBlocks());
-        
+        FLyrVect layer = (FLyrVect) application.getMapContextManager().createLayer(i18nManager.getTranslation("_Blocks"),
+                this.manager.getBlocks());
+
         // Add a new property to the layer to identify.
         layer.setProperty("ViewerLayer", Boolean.TRUE);
 
@@ -178,10 +177,7 @@ public class LandRegistryViewerExtension extends Extension {
      * Open the stores and initialize the logic manager whit this stores.
      */
     private void initializeStores() {
-        manager.initialize(
-                getResource("data/properties.shp"),
-                getResource("data/blocks.shp")
-        );
+        manager.initialize(getResource("data/properties.shp"), getResource("data/blocks.shp"));
     }
 
     /**
@@ -191,7 +187,7 @@ public class LandRegistryViewerExtension extends Extension {
      *
      * @return resource as a File
      */
-    private File getResource(String pathname) {
+    private File getResource( String pathname ) {
         URL res = this.getClass().getClassLoader().getResource(pathname);
         return new File(res.getPath());
     }
@@ -204,9 +200,9 @@ public class LandRegistryViewerExtension extends Extension {
         }
         ViewDocument viewDoc = this.viewWindow.getViewDocument();
         FLayer[] activeLayers = viewDoc.getMapContext().getLayers().getActives();
-        for( int i=0; i<activeLayers.length; i++ ) {
+        for( int i = 0; i < activeLayers.length; i++ ) {
             boolean viewerLayer = BooleanUtils.isTrue((Boolean) activeLayers[i].getProperty("ViewerLayer"));
-            if( viewerLayer ) {
+            if (viewerLayer) {
                 return true;
             }
         }

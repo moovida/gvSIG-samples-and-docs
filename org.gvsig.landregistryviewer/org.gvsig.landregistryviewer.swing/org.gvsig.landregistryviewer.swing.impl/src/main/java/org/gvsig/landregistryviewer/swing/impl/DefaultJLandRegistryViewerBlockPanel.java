@@ -34,7 +34,7 @@ import javax.swing.table.DefaultTableModel;
 
 import org.gvsig.landregistryviewer.LandRegistryViewerBlock;
 import org.gvsig.landregistryviewer.LandRegistryViewerException;
-import org.gvsig.landregistryviewer.LandRegistryViewerProperty;
+import org.gvsig.landregistryviewer.LandRegistryViewerParcel;
 import org.gvsig.landregistryviewer.swing.JLandRegistryViewerBlockPanel;
 import org.gvsig.landregistryviewer.swing.LandRegistryViewerSwingManager;
 import org.gvsig.tools.ToolsLocator;
@@ -83,12 +83,12 @@ public class DefaultJLandRegistryViewerBlockPanel extends
 		if( block == null ) {
 			data = new String[1][3];
 		} else {
-			List<LandRegistryViewerProperty> properties;
+			List<LandRegistryViewerParcel> properties;
 			try {
-				properties = this.block.getProperties();
+				properties = this.block.getParcels();
 				data = new String[properties.size()][3];
 				for (int row = 0; row < properties.size(); row++) {
-					LandRegistryViewerProperty property = properties.get(row);
+					LandRegistryViewerParcel property = properties.get(row);
 					data[row][0] = String.valueOf(property.getCreationDate());
 					data[row][1] = String.valueOf(property.getMunicipalityCode());
 					data[row][2] = property.getCode();

@@ -37,7 +37,7 @@ import org.gvsig.fmap.geom.operation.GeometryOperationNotSupportedException;
 import org.gvsig.landregistryviewer.LandRegistryViewerBlock;
 import org.gvsig.landregistryviewer.LandRegistryViewerException;
 import org.gvsig.landregistryviewer.LandRegistryViewerManager;
-import org.gvsig.landregistryviewer.LandRegistryViewerProperty;
+import org.gvsig.landregistryviewer.LandRegistryViewerParcel;
 import org.gvsig.tools.dispose.DisposableIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,12 +53,12 @@ public class DefaultLandRegistryViewerBlock implements LandRegistryViewerBlock {
     @SuppressWarnings("unused")
     private static final Logger LOG = LoggerFactory.getLogger(DefaultLandRegistryViewerBlock.class);
 
-	private static final String PROPERTIES_CODE = "PARCELA";
-	private static final String PROPERTIES_CREATIONDATE = "FECHAALTA";
-	private static final String PROPERTIES_MUNICODE = "MUNICIPIO";
+    private static final String PARCEL_CODE = "PARCELA";
+    private static final String PARCEL_CREATIONDATE = "FECHAALTA";
+    private static final String PARCEL_MUNICODE = "MUNICIPIO";
 
-	private DefaultLandRegistryViewerManager manager;
-	private Geometry shape;
+    private DefaultLandRegistryViewerManager manager;
+    private Geometry shape;
 
     /**
      * {@link DefaultLandRegistryViewerBlock} constructor with a
@@ -67,7 +67,7 @@ public class DefaultLandRegistryViewerBlock implements LandRegistryViewerBlock {
      * @param manager
      *            to use in the service
      */
-    public DefaultLandRegistryViewerBlock(DefaultLandRegistryViewerManager manager, Geometry shape) {
+    public DefaultLandRegistryViewerBlock( DefaultLandRegistryViewerManager manager, Geometry shape ) {
         this.manager = manager;
         this.shape = shape;
     }
@@ -76,54 +76,49 @@ public class DefaultLandRegistryViewerBlock implements LandRegistryViewerBlock {
         return this.manager;
     }
 
-	public Geometry getShape() {
-		return this.shape;
-	}
+    public Geometry getShape() {
+        return this.shape;
+    }
 
-	public List<LandRegistryViewerProperty> getProperties()
-			throws LandRegistryViewerException {
-		
-		FeatureSet set = null;
-		DisposableIterator it = null; 
-		List<LandRegistryViewerProperty> properties = new ArrayList<LandRegistryViewerProperty>();		
+    public List<LandRegistryViewerParcel> getParcels() throws LandRegistryViewerException {
 
-		try {
-			FeatureStore store = this.manager.getProperties();
-			String attrGeomName = store.getDefaultFeatureType().getDefaultGeometryAttributeName();
-			FeatureQuery query = store.createFeatureQuery();
-			query.setFilter( new IntersectsEvaluator(attrGeomName, this.shape) );
-			set = this.manager.getProperties().getFeatureSet(query);
-			if( set.isEmpty() ) {
-				return null;
-			}
-			it = set.fastIterator();
-			while( it.hasNext() ) {
-				Feature f = (Feature) it.next();
-				LandRegistryViewerProperty property = new DefaultLandRegistryViewerProperty(
-					this.manager,
-					f.getString(PROPERTIES_CODE),
-					f.getGeometry(attrGeomName),
-					f.getInt(PROPERTIES_CREATIONDATE),
-					f.getInt(PROPERTIES_MUNICODE)
-				);
-				properties.add(property);
-			}
-			return properties;
-			
-		} catch (DataException e) {
-			throw new LandRegistryViewerException(e);
-		} catch (GeometryOperationNotSupportedException e) {
-			throw new LandRegistryViewerException(e);
-		} catch (GeometryOperationException e) {
-			throw new LandRegistryViewerException(e);
-		} finally {
-			if( it != null ) {
-				it.dispose();
-			}
-			if( set != null ) {
-				set.dispose();
-			}
-		}
-	}
+        FeatureSet set = null;
+        DisposableIterator it = null;
+        List<LandRegistryViewerParcel> intersectingParcelsList = new ArrayList<LandRegistryViewerParcel>();
+
+        try {
+            FeatureStore parcelsStore = this.manager.getParcels();
+            String attrGeomName = parcelsStore.getDefaultFeatureType().getDefaultGeometryAttributeName();
+            FeatureQuery query = parcelsStore.createFeatureQuery();
+            query.setFilter(new IntersectsEvaluator(attrGeomName, this.shape));
+            set = this.manager.getParcels().getFeatureSet(query);
+            if (set.isEmpty()) {
+                return null;
+            }
+            it = set.fastIterator();
+            while( it.hasNext() ) {
+                Feature f = (Feature) it.next();
+                LandRegistryViewerParcel parcel = new DefaultLandRegistryViewerParcel(this.manager,
+                        f.getString(PARCEL_CODE), f.getGeometry(attrGeomName), f.getInt(PARCEL_CREATIONDATE),
+                        f.getInt(PARCEL_MUNICODE));
+                intersectingParcelsList.add(parcel);
+            }
+            return intersectingParcelsList;
+
+        } catch (DataException e) {
+            throw new LandRegistryViewerException(e);
+        } catch (GeometryOperationNotSupportedException e) {
+            throw new LandRegistryViewerException(e);
+        } catch (GeometryOperationException e) {
+            throw new LandRegistryViewerException(e);
+        } finally {
+            if (it != null) {
+                it.dispose();
+            }
+            if (set != null) {
+                set.dispose();
+            }
+        }
+    }
 
 }

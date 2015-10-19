@@ -28,7 +28,6 @@ import org.gvsig.fmap.geom.GeometryLibrary;
 import org.gvsig.landregistryviewer.LandRegistryViewerLibrary;
 import org.gvsig.landregistryviewer.LandRegistryViewerLocator;
 import org.gvsig.tools.library.AbstractLibrary;
-import org.gvsig.tools.library.Library;
 import org.gvsig.tools.library.LibraryException;
 
 /**
@@ -37,15 +36,15 @@ import org.gvsig.tools.library.LibraryException;
  * @author gvSIG team
  * @version $Id$
  */
-public class LandRegistryViewerDefaultImplLibrary extends AbstractLibrary {
+public class DefaultLandRegistryViewerLibrary extends AbstractLibrary {
 
-	@Override
-	public void doRegistration() {
-	    this.registerAsImplementationOf(LandRegistryViewerLibrary.class);
-	    this.require(DALLibrary.class);
-	    this.require(GeometryLibrary.class);
-	}
-	
+    @Override
+    public void doRegistration() {
+        this.registerAsImplementationOf(LandRegistryViewerLibrary.class);
+        this.require(DALLibrary.class);
+        this.require(GeometryLibrary.class);
+    }
+
     @Override
     protected void doInitialize() throws LibraryException {
         LandRegistryViewerLocator.registerManager(DefaultLandRegistryViewerManager.class);

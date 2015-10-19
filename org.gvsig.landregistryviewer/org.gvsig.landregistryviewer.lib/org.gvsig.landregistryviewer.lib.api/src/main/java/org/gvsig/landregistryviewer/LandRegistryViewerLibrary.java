@@ -26,7 +26,6 @@ package org.gvsig.landregistryviewer;
 import org.gvsig.fmap.dal.DALLibrary;
 import org.gvsig.fmap.geom.GeometryLibrary;
 import org.gvsig.tools.library.AbstractLibrary;
-import org.gvsig.tools.library.Library;
 import org.gvsig.tools.library.LibraryException;
 import org.gvsig.tools.locator.ReferenceNotRegisteredException;
 
@@ -38,13 +37,13 @@ import org.gvsig.tools.locator.ReferenceNotRegisteredException;
  */
 public class LandRegistryViewerLibrary extends AbstractLibrary {
 
-	@Override
-	public void doRegistration() {
-	    this.registerAsAPI(LandRegistryViewerLibrary.class);
+    @Override
+    public void doRegistration() {
+        this.registerAsAPI(LandRegistryViewerLibrary.class);
         this.require(DALLibrary.class);
         this.require(GeometryLibrary.class);
-	}
-	
+    }
+
     @Override
     protected void doInitialize() throws LibraryException {
         // Do nothing
@@ -55,9 +54,8 @@ public class LandRegistryViewerLibrary extends AbstractLibrary {
         // Validate there is any implementation registered.
         LandRegistryViewerManager manager = LandRegistryViewerLocator.getManager();
         if (manager == null) {
-            throw new ReferenceNotRegisteredException(
-                LandRegistryViewerLocator.MANAGER_NAME, LandRegistryViewerLocator
-                    .getInstance());
+            throw new ReferenceNotRegisteredException(LandRegistryViewerLocator.MANAGER_NAME,
+                    LandRegistryViewerLocator.getInstance());
         }
     }
 

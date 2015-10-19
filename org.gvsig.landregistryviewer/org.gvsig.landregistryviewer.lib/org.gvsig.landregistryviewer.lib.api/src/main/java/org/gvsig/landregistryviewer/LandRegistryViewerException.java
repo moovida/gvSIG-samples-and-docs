@@ -39,8 +39,7 @@ public class LandRegistryViewerException extends BaseException {
 
     private static final long serialVersionUID = 6756475060924237176L;
 
-    private static final String MESSAGE =
-        "An error has been produced in the LandRegistryViewer library";
+    private static final String MESSAGE = "An error has been produced in the LandRegistryViewer library";
 
     private static final String KEY = "_LandRegistryViewerException";
 
@@ -63,7 +62,7 @@ public class LandRegistryViewerException extends BaseException {
      * @param cause
      *            the original cause of the exception
      */
-    public LandRegistryViewerException(Exception cause) {
+    public LandRegistryViewerException( Exception cause ) {
         super(MESSAGE, cause, KEY, serialVersionUID);
     }
 
@@ -76,7 +75,7 @@ public class LandRegistryViewerException extends BaseException {
      * @param code
      *            the unique code to identify the exception
      */
-    protected LandRegistryViewerException(String message, String key, long code) {
+    protected LandRegistryViewerException( String message, String key, long code ) {
         super(message, key, code);
     }
 
@@ -91,8 +90,7 @@ public class LandRegistryViewerException extends BaseException {
      * @param code
      *            the unique code to identify the exception
      */
-    protected LandRegistryViewerException(String message, Throwable cause,
-        String key, long code) {
+    protected LandRegistryViewerException( String message, Throwable cause, String key, long code ) {
         super(message, cause, key, code);
     }
 }

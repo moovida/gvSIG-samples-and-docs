@@ -25,7 +25,7 @@ package org.gvsig.landregistryviewer;
 
 import org.gvsig.fmap.geom.Geometry;
 
-public interface LandRegistryViewerProperty {
+public interface LandRegistryViewerParcel {
 
     /**
      * Returns the {@link LandRegistryViewerManager}

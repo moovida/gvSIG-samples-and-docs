@@ -25,47 +25,48 @@ package org.gvsig.landregistryviewer.impl;
 
 import org.gvsig.fmap.geom.Geometry;
 import org.gvsig.landregistryviewer.LandRegistryViewerManager;
-import org.gvsig.landregistryviewer.LandRegistryViewerProperty;
+import org.gvsig.landregistryviewer.LandRegistryViewerParcel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DefaultLandRegistryViewerProperty implements LandRegistryViewerProperty {
+public class DefaultLandRegistryViewerParcel implements LandRegistryViewerParcel {
 
     @SuppressWarnings("unused")
-    private static final Logger LOG = LoggerFactory.getLogger(DefaultLandRegistryViewerProperty.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DefaultLandRegistryViewerParcel.class);
 
-	private String code;
-	private int municipioCode;
-	private int creationDate;
-	private Geometry shape;
-	private DefaultLandRegistryViewerManager manager;
-	
-	public DefaultLandRegistryViewerProperty(DefaultLandRegistryViewerManager manager, String code, Geometry shape, int creationDate, int municipioCode) {
-		this.manager = manager;
-		this.code = code;
-		this.municipioCode= municipioCode;
-		this.creationDate = creationDate;
-		this.shape = shape;
-	}
-	
-	public String getCode() {
-		return this.code;
-	}
+    private String code;
+    private int municipioCode;
+    private int creationDate;
+    private Geometry shape;
+    private DefaultLandRegistryViewerManager manager;
 
-	public int getCreationDate() {
-		return this.creationDate;
-	}
+    public DefaultLandRegistryViewerParcel( DefaultLandRegistryViewerManager manager, String code, Geometry shape,
+            int creationDate, int municipioCode ) {
+        this.manager = manager;
+        this.code = code;
+        this.municipioCode = municipioCode;
+        this.creationDate = creationDate;
+        this.shape = shape;
+    }
 
-	public LandRegistryViewerManager getManager() {
-		return this.manager;
-	}
+    public String getCode() {
+        return this.code;
+    }
 
-	public int getMunicipalityCode() {
-		return this.municipioCode;
-	}
+    public int getCreationDate() {
+        return this.creationDate;
+    }
 
-	public Geometry getShape() {
-		return this.shape;
-	}
+    public LandRegistryViewerManager getManager() {
+        return this.manager;
+    }
+
+    public int getMunicipalityCode() {
+        return this.municipioCode;
+    }
+
+    public Geometry getShape() {
+        return this.shape;
+    }
 
 }
