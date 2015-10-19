@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+		 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>org.gvsig.landregistryviewer.swing</artifactId>
+	<packaging>pom</packaging>
+	<name>org.gvsig.landregistryviewer.swing</name>
+	<parent>
+		<groupId>org.gvsig</groupId>
+		<artifactId>org.gvsig.landregistryviewer</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<modules>
+		<module>org.gvsig.landregistryviewer.swing.api</module>
+		<module>org.gvsig.landregistryviewer.swing.impl</module>
+	</modules>
+</project>
+

@@ -1,0 +1,31 @@
+<assembly>
+  <id>package-main</id>
+  <formats>
+    <format>dir</format>
+    <format>zip</format>
+  </formats>
+  <baseDirectory>${project.artifactId}</baseDirectory>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <files>
+    <file>
+      <source>target/${project.artifactId}-${project.version}.jar</source>
+      <outputDirectory>.</outputDirectory>
+    </file>
+  </files>
+
+  <fileSets>
+    <fileSet>
+      <directory>src/main/resources/data</directory>
+      <outputDirectory>data</outputDirectory>
+    </fileSet>
+  </fileSets>
+
+  <dependencySets>
+    <dependencySet>
+      <useProjectArtifact>false</useProjectArtifact>
+      <useTransitiveDependencies>true</useTransitiveDependencies>
+      <outputDirectory>lib</outputDirectory>
+    </dependencySet>
+  </dependencySets>
+
+</assembly>
