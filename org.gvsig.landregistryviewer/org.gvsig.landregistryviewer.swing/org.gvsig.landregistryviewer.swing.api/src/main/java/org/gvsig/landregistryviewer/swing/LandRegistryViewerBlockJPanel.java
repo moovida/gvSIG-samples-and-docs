@@ -33,9 +33,9 @@ import org.gvsig.tools.swing.api.Component;
  * @author gvSIG Team
  * @version $Id$
  */
-public interface JLandRegistryViewerBlockPanel extends Component {
+public interface LandRegistryViewerBlockJPanel extends Component {
 
-	/**
+    /**
      * Returns the {@link LandRegistryViewerBlock} associated with the panel.
      * 
      * @return the {@link LandRegistryViewerBlock}
@@ -48,21 +48,20 @@ public interface JLandRegistryViewerBlockPanel extends Component {
      * @param block
      * @throws LandRegistryViewerException
      */
-    public void setLandRegistryViewerBlock(LandRegistryViewerBlock block) throws LandRegistryViewerException;
-	
+    public void setLandRegistryViewerBlock( LandRegistryViewerBlock block ) throws LandRegistryViewerException;
+
     /**
      * Set visible or not visible the close button of the panel
      * 
      * @param visible
      */
-	public void setCloseButtonVisible(boolean visible);
-	
-	/**
-	 * Get the state of visible for the close button of the panel.
-	 * 
-	 * @return true if close button is visible, otherwise false.
-	 */
-	public boolean isCloseButtonVisible();
-	
+    public void setCloseButtonVisible( boolean visible );
+
+    /**
+     * Get the state of visible for the close button of the panel.
+     * 
+     * @return true if close button is visible, otherwise false.
+     */
+    public boolean isCloseButtonVisible();
 
 }

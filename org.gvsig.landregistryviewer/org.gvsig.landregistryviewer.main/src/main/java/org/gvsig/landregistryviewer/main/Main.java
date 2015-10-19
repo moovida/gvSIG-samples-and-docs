@@ -59,7 +59,7 @@ import org.gvsig.landregistryviewer.LandRegistryViewerBlock;
 import org.gvsig.landregistryviewer.LandRegistryViewerException;
 import org.gvsig.landregistryviewer.LandRegistryViewerLocator;
 import org.gvsig.landregistryviewer.LandRegistryViewerManager;
-import org.gvsig.landregistryviewer.swing.JLandRegistryViewerBlockPanel;
+import org.gvsig.landregistryviewer.swing.LandRegistryViewerBlockJPanel;
 import org.gvsig.landregistryviewer.swing.LandRegistryViewerSwingLocator;
 import org.gvsig.landregistryviewer.swing.LandRegistryViewerSwingManager;
 import org.gvsig.tools.library.impl.DefaultLibrariesInitializer;
@@ -93,7 +93,7 @@ public class Main {
     }
     
     public class PropertiesOfBlockListener extends AbstractPointListener {
-    	JLandRegistryViewerBlockPanel panel = null;
+    	LandRegistryViewerBlockJPanel panel = null;
     	
     	public void point(PointEvent event) throws BehaviorException {
     		LandRegistryViewerSwingManager swingManager = LandRegistryViewerSwingLocator.getSwingManager();
@@ -104,7 +104,7 @@ public class Main {
     				return;
     			}
     			if( panel == null ) {
-	    			panel = swingManager.createJLandRegistryViewerBlockPanel(block);
+	    			panel = swingManager.createLandRegistryViewerBlockJPanel(block);
 	    			panel.asJComponent().addAncestorListener(new AncestorListener() {
 						public void ancestorRemoved(AncestorEvent arg0) { panel = null;	}
 						public void ancestorMoved(AncestorEvent arg0) {	}

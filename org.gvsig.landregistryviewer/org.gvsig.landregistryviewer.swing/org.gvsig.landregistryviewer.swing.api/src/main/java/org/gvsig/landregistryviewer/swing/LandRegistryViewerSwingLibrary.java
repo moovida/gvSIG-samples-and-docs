@@ -36,12 +36,12 @@ import org.gvsig.tools.locator.ReferenceNotRegisteredException;
  */
 public class LandRegistryViewerSwingLibrary extends AbstractLibrary {
 
-	public void doRegistration() {
-	    this.registerAsAPI(LandRegistryViewerSwingLibrary.class);
-	    this.require(LandRegistryViewerLibrary.class);
-	}
+    public void doRegistration() {
+        this.registerAsAPI(LandRegistryViewerSwingLibrary.class);
+        this.require(LandRegistryViewerLibrary.class);
+    }
 
-	@Override
+    @Override
     protected void doInitialize() throws LibraryException {
         // Do nothing
     }
@@ -49,12 +49,10 @@ public class LandRegistryViewerSwingLibrary extends AbstractLibrary {
     @Override
     protected void doPostInitialize() throws LibraryException {
         // Validate there is any implementation registered.
-        LandRegistryViewerSwingManager manager =
-            LandRegistryViewerSwingLocator.getSwingManager();
+        LandRegistryViewerSwingManager manager = LandRegistryViewerSwingLocator.getSwingManager();
         if (manager == null) {
-            throw new ReferenceNotRegisteredException(
-                LandRegistryViewerSwingLocator.SWING_MANAGER_NAME,
-                LandRegistryViewerSwingLocator.getInstance());
+            throw new ReferenceNotRegisteredException(LandRegistryViewerSwingLocator.SWING_MANAGER_NAME,
+                    LandRegistryViewerSwingLocator.getInstance());
         }
     }
 

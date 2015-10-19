@@ -36,22 +36,20 @@ import org.gvsig.tools.library.LibraryException;
  * @author gvSIG team
  * @version $Id$
  */
-public class LandRegistryViewerSwingDefaultImplLibrary extends AbstractLibrary {
+public class DefaultLandRegistryViewerSwingLibrary extends AbstractLibrary {
 
-	@Override
-	public void doRegistration() {
-	    this.registerAsImplementationOf(LandRegistryViewerSwingLibrary.class);
-	}
-	
+    @Override
+    public void doRegistration() {
+        this.registerAsImplementationOf(LandRegistryViewerSwingLibrary.class);
+    }
+
     @Override
     protected void doInitialize() throws LibraryException {
-    	I18nManager i18nManager = ToolsLocator.getI18nManager();
-    	i18nManager.addResourceFamily(
-				"org.gvsig.landregistryviewer.i18n.text",
-				DefaultLandRegistryViewerSwingManager.class.getClassLoader(),
-				DefaultLandRegistryViewerSwingManager.class.getClass().getName());
-        LandRegistryViewerSwingLocator
-            .registerSwingManager(DefaultLandRegistryViewerSwingManager.class);
+        I18nManager i18nManager = ToolsLocator.getI18nManager();
+        i18nManager.addResourceFamily("org.gvsig.landregistryviewer.i18n.text",
+                DefaultLandRegistryViewerSwingManager.class.getClassLoader(),
+                DefaultLandRegistryViewerSwingManager.class.getClass().getName());
+        LandRegistryViewerSwingLocator.registerSwingManager(DefaultLandRegistryViewerSwingManager.class);
     }
 
     @Override

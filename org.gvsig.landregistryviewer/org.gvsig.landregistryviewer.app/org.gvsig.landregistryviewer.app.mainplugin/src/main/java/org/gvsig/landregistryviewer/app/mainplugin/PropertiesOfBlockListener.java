@@ -39,7 +39,7 @@ import org.gvsig.landregistryviewer.LandRegistryViewerBlock;
 import org.gvsig.landregistryviewer.LandRegistryViewerException;
 import org.gvsig.landregistryviewer.LandRegistryViewerLocator;
 import org.gvsig.landregistryviewer.LandRegistryViewerManager;
-import org.gvsig.landregistryviewer.swing.JLandRegistryViewerBlockPanel;
+import org.gvsig.landregistryviewer.swing.LandRegistryViewerBlockJPanel;
 import org.gvsig.landregistryviewer.swing.LandRegistryViewerSwingLocator;
 import org.gvsig.landregistryviewer.swing.LandRegistryViewerSwingManager;
 import org.gvsig.tools.ToolsLocator;
@@ -52,7 +52,7 @@ import org.slf4j.LoggerFactory;
 public class PropertiesOfBlockListener extends AbstractPointListener {
 	private static final Logger logger = LoggerFactory.getLogger(PropertiesOfBlockListener.class);
 	
-	private JLandRegistryViewerBlockPanel blockPanel = null;
+	private LandRegistryViewerBlockJPanel blockPanel = null;
 	
     public void point(PointEvent event) throws BehaviorException {
         ApplicationManager application = ApplicationLocator.getManager();
@@ -67,7 +67,7 @@ public class PropertiesOfBlockListener extends AbstractPointListener {
                 return;
             }
             if( this.blockPanel == null ) {
-            	this.blockPanel = guiManager.createJLandRegistryViewerBlockPanel(block);
+            	this.blockPanel = guiManager.createLandRegistryViewerBlockJPanel(block);
             	//this.blockPanel.setCloseButtonVisible(false);
             	JComponent panel = blockPanel.asJComponent();
 	            ToolsSwingLocator.getWindowManager().showWindow(

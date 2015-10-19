@@ -27,10 +27,8 @@ import org.gvsig.landregistryviewer.LandRegistryViewerBlock;
 import org.gvsig.landregistryviewer.LandRegistryViewerException;
 import org.gvsig.landregistryviewer.LandRegistryViewerLocator;
 import org.gvsig.landregistryviewer.LandRegistryViewerManager;
-import org.gvsig.landregistryviewer.swing.JLandRegistryViewerBlockPanel;
+import org.gvsig.landregistryviewer.swing.LandRegistryViewerBlockJPanel;
 import org.gvsig.landregistryviewer.swing.LandRegistryViewerSwingManager;
-import org.gvsig.tools.ToolsLocator;
-import org.gvsig.tools.i18n.I18nManager;
 
 /**
  * Default implementation of the {@link LandRegistryViewerSwingManager}.
@@ -38,21 +36,17 @@ import org.gvsig.tools.i18n.I18nManager;
  * @author gvSIG Team
  * @version $Id$
  */
-public class DefaultLandRegistryViewerSwingManager implements
-    LandRegistryViewerSwingManager {
+public class DefaultLandRegistryViewerSwingManager implements LandRegistryViewerSwingManager {
 
     private LandRegistryViewerManager manager;
-    private I18nManager i18nmanager = null;
 
     public DefaultLandRegistryViewerSwingManager() {
-        this.i18nmanager = ToolsLocator.getI18nManager();
         this.manager = LandRegistryViewerLocator.getManager();
     }
 
-	public JLandRegistryViewerBlockPanel createJLandRegistryViewerBlockPanel(
-			LandRegistryViewerBlock block) throws LandRegistryViewerException {
-        JLandRegistryViewerBlockPanel panel =
-            new DefaultJLandRegistryViewerBlockPanel(this, block);
+    public LandRegistryViewerBlockJPanel createLandRegistryViewerBlockJPanel( LandRegistryViewerBlock block )
+            throws LandRegistryViewerException {
+        LandRegistryViewerBlockJPanel panel = new DefaultLandRegistryViewerBlockJPanel(this, block);
         return panel;
     }
 

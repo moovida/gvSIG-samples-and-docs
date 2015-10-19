@@ -38,22 +38,19 @@ public class LandRegistryViewerSwingLocator extends BaseLocator {
     /**
      * LandRegistryViewer swing manager name.
      */
-    public static final String SWING_MANAGER_NAME =
-        "LandRegistryViewer.swing.manager";
+    public static final String SWING_MANAGER_NAME = "LandRegistryViewer.swing.manager";
 
     /**
      * LandRegistryViewer swing manager description.
      */
-    public static final String SWING_MANAGER_DESCRIPTION =
-        "LandRegistryViewer UIManager";
+    public static final String SWING_MANAGER_DESCRIPTION = "LandRegistryViewer UIManager";
 
     private static final String LOCATOR_NAME = "LandRegistryViewer.swing.locator";
 
     /**
      * Unique instance.
      */
-    private static final LandRegistryViewerSwingLocator INSTANCE =
-        new LandRegistryViewerSwingLocator();
+    private static final LandRegistryViewerSwingLocator INSTANCE = new LandRegistryViewerSwingLocator();
 
     /**
      * Return the singleton instance.
@@ -79,10 +76,8 @@ public class LandRegistryViewerSwingLocator extends BaseLocator {
      * @param clazz
      *            implementing the PersistenceManager interface
      */
-    public static void registerSwingManager(
-        Class<? extends LandRegistryViewerSwingManager> clazz) {
-        getInstance().register(SWING_MANAGER_NAME, SWING_MANAGER_DESCRIPTION,
-            clazz);
+    public static void registerSwingManager( Class< ? extends LandRegistryViewerSwingManager> clazz ) {
+        getInstance().register(SWING_MANAGER_NAME, SWING_MANAGER_DESCRIPTION, clazz);
     }
 
     /**
@@ -91,8 +86,7 @@ public class LandRegistryViewerSwingLocator extends BaseLocator {
      * @return {@link ScriptingUIManager}
      */
     public static LandRegistryViewerSwingManager getSwingManager() {
-        return (LandRegistryViewerSwingManager) getInstance()
-            .get(SWING_MANAGER_NAME);
+        return (LandRegistryViewerSwingManager) getInstance().get(SWING_MANAGER_NAME);
     }
 
 }
