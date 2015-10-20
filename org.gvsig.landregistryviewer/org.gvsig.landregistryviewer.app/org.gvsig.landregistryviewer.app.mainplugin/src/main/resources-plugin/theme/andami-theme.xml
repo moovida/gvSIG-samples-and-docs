@@ -39,5 +39,5 @@
         <Icon path="black-icon16x16.png"/>
     </ApplicationImages>
     <ApplicationName value="Custom gvSIG ${version}.${buildNumber}"/>
-    <priority value="1"/>
+    <priority value="100"/>
 </AndamiProperties>
