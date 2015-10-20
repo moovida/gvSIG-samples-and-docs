@@ -25,11 +25,9 @@ package org.gvsig.landregistryviewer.app.mainplugin;
 
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
-import org.gvsig.andami.ui.mdiManager.MDIManager;
 import org.gvsig.app.ApplicationLocator;
 import org.gvsig.app.ApplicationManager;
 import org.gvsig.fmap.mapcontrol.tools.BehaviorException;
@@ -49,50 +47,43 @@ import org.gvsig.tools.swing.api.windowmanager.WindowManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PropertiesOfBlockListener extends AbstractPointListener {
-	private static final Logger logger = LoggerFactory.getLogger(PropertiesOfBlockListener.class);
-	
-	private LandRegistryViewerBlockJPanel blockPanel = null;
-	
-    public void point(PointEvent event) throws BehaviorException {
+public class ParcelsOfBlockListener extends AbstractPointListener {
+    private static final Logger logger = LoggerFactory.getLogger(ParcelsOfBlockListener.class);
+
+    private LandRegistryViewerBlockJPanel blockPanel = null;
+
+    public void point( PointEvent event ) throws BehaviorException {
         ApplicationManager application = ApplicationLocator.getManager();
         I18nManager i18nManager = ToolsLocator.getI18nManager();
         LandRegistryViewerManager logicManager = LandRegistryViewerLocator.getManager();
         LandRegistryViewerSwingManager guiManager = LandRegistryViewerSwingLocator.getSwingManager();
 
-        LandRegistryViewerBlock block;
         try {
-            block = logicManager.getBlock(event.getMapPoint());
+            LandRegistryViewerBlock block = logicManager.getBlock(event.getMapPoint());
             if (block == null) {
                 return;
             }
-            if( this.blockPanel == null ) {
-            	this.blockPanel = guiManager.createLandRegistryViewerBlockJPanel(block);
-            	//this.blockPanel.setCloseButtonVisible(false);
-            	JComponent panel = blockPanel.asJComponent();
-	            ToolsSwingLocator.getWindowManager().showWindow(
-	            		panel, 
-		                i18nManager.getTranslation("_Block_registry_information"),
-		                WindowManager.MODE.TOOL
-		            );
-	            panel.addAncestorListener(new AncestorListener() {
-					public void ancestorRemoved(AncestorEvent arg0) {
-						blockPanel = null; 
-					}
-					public void ancestorMoved(AncestorEvent arg0) {
-					}
-					public void ancestorAdded(AncestorEvent arg0) {
-					}
-				});
+            if (this.blockPanel == null) {
+                this.blockPanel = guiManager.createLandRegistryViewerBlockJPanel(block);
+                // this.blockPanel.setCloseButtonVisible(false);
+                JComponent panel = blockPanel.asJComponent();
+                ToolsSwingLocator.getWindowManager().showWindow(panel, i18nManager.getTranslation("_Block_registry_information"),
+                        WindowManager.MODE.TOOL);
+                panel.addAncestorListener(new AncestorListener(){
+                    public void ancestorRemoved( AncestorEvent arg0 ) {
+                        blockPanel = null;
+                    }
+                    public void ancestorMoved( AncestorEvent arg0 ) {
+                    }
+                    public void ancestorAdded( AncestorEvent arg0 ) {
+                    }
+                });
             } else {
-            	this.blockPanel.setLandRegistryViewerBlock(block);
+                this.blockPanel.setLandRegistryViewerBlock(block);
             }
         } catch (LandRegistryViewerException e) {
-        	logger.warn("Can't show block registry information",e);
-        	application.message(
-        			i18nManager.getTranslation("_Cant_show_block_registry_information"), 
-        			JOptionPane.WARNING_MESSAGE
-        	);
+            logger.warn("Can't show block registry information", e);
+            application.message(i18nManager.getTranslation("_Cant_show_block_registry_information"), JOptionPane.WARNING_MESSAGE);
         }
     }
 

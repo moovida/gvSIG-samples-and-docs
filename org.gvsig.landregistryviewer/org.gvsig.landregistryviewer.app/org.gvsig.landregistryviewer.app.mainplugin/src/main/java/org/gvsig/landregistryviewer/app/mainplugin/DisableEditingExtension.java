@@ -26,22 +26,23 @@ public class DisableEditingExtension extends Extension {
 
     public void postInitialize() {
         PluginsManager pluginManager = PluginsLocator.getManager();
-        this.landRegistryViewerExtension = (LandRegistryViewerExtension) pluginManager.getExtension(LandRegistryViewerExtension.class);
+        this.landRegistryViewerExtension = (LandRegistryViewerExtension) pluginManager
+                .getExtension(LandRegistryViewerExtension.class);
 
         ActionInfoManager actionManager = PluginsLocator.getActionInfoManager();
         this.startEditingAction = actionManager.getAction("layer-start-editing");
         if (this.startEditingAction != null) {
             try {
-                this.startEditingAction = (ActionInfo) this.startEditingAction.clone();            
-            } catch( CloneNotSupportedException ex) {
+                this.startEditingAction = (ActionInfo) this.startEditingAction.clone();
+            } catch (CloneNotSupportedException ex) {
                 // Por aqui no deberia pasar ya que ActionInfo siempre implementa este metodo.
             }
             actionManager.redirect("layer-start-editing", "layer-start-editing-customized");
         }
     }
 
-    public void execute(String command) {
-        if( this.startEditingAction!=null ) {
+    public void execute( String command ) {
+        if (this.startEditingAction != null) {
             this.startEditingAction.getExtension().execute(command);
         }
     }

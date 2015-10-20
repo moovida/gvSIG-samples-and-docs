@@ -26,13 +26,9 @@ import java.awt.GridBagConstraints;
 import java.beans.PropertyVetoException;
 import java.io.File;
 import java.net.URL;
-import org.apache.commons.lang3.BooleanUtils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.BooleanUtils;
 import org.gvsig.andami.IconThemeHelper;
-import org.gvsig.andami.PluginsLocator;
-import org.gvsig.andami.PluginsManager;
 import org.gvsig.andami.plugins.Extension;
 import org.gvsig.andami.ui.mdiManager.IWindow;
 import org.gvsig.app.ApplicationLocator;
@@ -50,6 +46,8 @@ import org.gvsig.landregistryviewer.LandRegistryViewerLocator;
 import org.gvsig.landregistryviewer.LandRegistryViewerManager;
 import org.gvsig.tools.ToolsLocator;
 import org.gvsig.tools.i18n.I18nManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Andami extension to show LandRegistryViewer in the application.
@@ -78,11 +76,12 @@ public class LandRegistryViewerExtension extends Extension {
     public void postInitialize() {
         try {
             manager = LandRegistryViewerLocator.getManager();
-            this.initializeStores();
+            // Open the stores and initialize the logic manager whit this stores.
+            manager.initialize(getResource("data/parcels.shp"), getResource("data/blocks.shp"));
+
             viewWindow = this.createViewWindow();
-
         } catch (LoadLayerException e) {
-
+            logger.error("An error occurred", e);
         }
     }
 
@@ -138,8 +137,8 @@ public class LandRegistryViewerExtension extends Extension {
         // 1. Create a new view and set the name.
         ViewManager viewManager = (ViewManager) projectManager.getDocumentManager(ViewManager.TYPENAME);
         ViewDocument view = (ViewDocument) viewManager.createDocument();
-
         view.setName(i18nManager.getTranslation(MY_VIEW_NAME));
+
         // Setting view's projection to shapefile's known CRS
         view.getMapContext().setProjection(CRSFactory.getCRS("EPSG:23030"));
 
@@ -147,7 +146,7 @@ public class LandRegistryViewerExtension extends Extension {
         FLyrVect layer = (FLyrVect) application.getMapContextManager().createLayer(i18nManager.getTranslation("_Blocks"),
                 this.manager.getBlocks());
 
-        // Add a new property to the layer to identify.
+        // Add a new property to the layer to identify it.
         layer.setProperty("ViewerLayer", Boolean.TRUE);
 
         // 3. Add this layer to the mapcontext of the new view.
@@ -158,26 +157,19 @@ public class LandRegistryViewerExtension extends Extension {
 
         // 5. Force to show the view's window.
         IView viewWindow = (IView) viewManager.getMainWindow(view);
-
         application.getUIManager().addWindow(viewWindow, GridBagConstraints.CENTER);
         try {
+            // 6. and maximise the window
             application.getUIManager().setMaximum((IWindow) viewWindow, true);
         } catch (PropertyVetoException e) {
             logger.info("Can't maximize view.", e);
         }
 
-        // 6. Register my tool in the mapcontrol of the view.
-        PropertiesOfBlockListener listener = new PropertiesOfBlockListener();
+        // 7. Register the tool in the mapcontrol of the view to listen to point selections.
+        ParcelsOfBlockListener listener = new ParcelsOfBlockListener();
         viewWindow.getMapControl().addBehavior(TOOL_NAME, new PointBehavior(listener));
 
         return viewWindow;
-    }
-
-    /**
-     * Open the stores and initialize the logic manager whit this stores.
-     */
-    private void initializeStores() {
-        manager.initialize(getResource("data/properties.shp"), getResource("data/blocks.shp"));
     }
 
     /**

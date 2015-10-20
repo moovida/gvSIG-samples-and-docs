@@ -86,169 +86,131 @@ public class Main {
     private JFrame frame = null;
     private File baseFolder = null;
 
-    public static void main(String args[]) throws Exception {
+    public static void main( String args[] ) throws Exception {
         new DefaultLibrariesInitializer().fullInitialize();
         Main main = new Main();
-       	main.doMain();
+        main.doMain();
     }
-    
+
     public class PropertiesOfBlockListener extends AbstractPointListener {
-    	LandRegistryViewerBlockJPanel panel = null;
-    	
-    	public void point(PointEvent event) throws BehaviorException {
-    		LandRegistryViewerSwingManager swingManager = LandRegistryViewerSwingLocator.getSwingManager();
-    		LandRegistryViewerManager manager = LandRegistryViewerLocator.getManager();
-    		try {
-    			LandRegistryViewerBlock block = manager.getBlock(event.getMapPoint());
-    			if( block == null ) {
-    				return;
-    			}
-    			if( panel == null ) {
-	    			panel = swingManager.createLandRegistryViewerBlockJPanel(block);
-	    			panel.asJComponent().addAncestorListener(new AncestorListener() {
-						public void ancestorRemoved(AncestorEvent arg0) { panel = null;	}
-						public void ancestorMoved(AncestorEvent arg0) {	}
-						public void ancestorAdded(AncestorEvent arg0) {	}
-					});
-	    			ToolsSwingLocator.getWindowManager().showWindow(
-	    					panel.asJComponent(), 
-	    					"Block information", 
-	    					WindowManager.MODE.TOOL);
-    			} else {
-    				panel.setLandRegistryViewerBlock(block);
-    			}
-    		} catch (LandRegistryViewerException e) {
-    			logger.warn("Can't process point event.",e);
-    			throw new RuntimeException("Can't show properties of selected block.",e);
-    		}
-    	}
+        LandRegistryViewerBlockJPanel panel = null;
+
+        public void point( PointEvent event ) throws BehaviorException {
+            LandRegistryViewerSwingManager swingManager = LandRegistryViewerSwingLocator.getSwingManager();
+            LandRegistryViewerManager manager = LandRegistryViewerLocator.getManager();
+            try {
+                LandRegistryViewerBlock block = manager.getBlock(event.getMapPoint());
+                if (block == null) {
+                    return;
+                }
+                if (panel == null) {
+                    panel = swingManager.createLandRegistryViewerBlockJPanel(block);
+                    panel.asJComponent().addAncestorListener(new AncestorListener(){
+                        public void ancestorRemoved( AncestorEvent arg0 ) {
+                            panel = null;
+                        }
+                        public void ancestorMoved( AncestorEvent arg0 ) {
+                        }
+                        public void ancestorAdded( AncestorEvent arg0 ) {
+                        }
+                    });
+                    ToolsSwingLocator.getWindowManager().showWindow(panel.asJComponent(), "Block information",
+                            WindowManager.MODE.TOOL);
+                } else {
+                    panel.setLandRegistryViewerBlock(block);
+                }
+            } catch (LandRegistryViewerException e) {
+                logger.warn("Can't process point event.", e);
+                throw new RuntimeException("Can't show properties of selected block.", e);
+            }
+        }
 
     }
 
     private void initBaseFolder() {
-    	File folder = null;
-    	File curdir = new File(System.getProperty("user.dir")); 
-		folder = new File(curdir,"data");
-    	if( !folder.exists() ) {
-    		// Are we developing?
-        	folder = new File(curdir,"src/main/resources/data");
-    		if( !folder.exists() ) {
-    			String msg = "Could not locate the cartography.\ncurdir='"+curdir.getAbsolutePath()+"'.";
-    			JOptionPane.showMessageDialog(null, msg);
-    			System.err.println(msg);
-    			System.exit(-1);
-    		}
-    	}
-    	baseFolder = folder.getParentFile();
+        File folder = null;
+        File curdir = new File(System.getProperty("user.dir"));
+        folder = new File(curdir, "data");
+        if (!folder.exists()) {
+            // Are we developing?
+            folder = new File(curdir, "src/main/resources/data");
+            if (!folder.exists()) {
+                String msg = "Could not locate the cartography.\ncurdir='" + curdir.getAbsolutePath() + "'.";
+                JOptionPane.showMessageDialog(null, msg);
+                System.err.println(msg);
+                System.exit(-1);
+            }
+        }
+        baseFolder = folder.getParentFile();
     }
 
     private void initLandRegistryViewer() {
         manager = LandRegistryViewerLocator.getManager();
-    	manager.initialize(
-    			new File(baseFolder,"data/properties.shp"), 
-    			new File(baseFolder, "data/blocks.shp")
-    	);
+        manager.initialize(new File(baseFolder, "data/properties.shp"), new File(baseFolder, "data/blocks.shp"));
     }
-    
+
     private void initMapControl() throws Exception {
-    	mapControlManager = MapControlLocator.getMapControlManager();
+        mapControlManager = MapControlLocator.getMapControlManager();
 
         mapControl = mapControlManager.createJMapControlPanel(null);
-        mapControl.addBehavior(
-    		"zoom", 
-		    new Behavior[] {	
-			    new RectangleBehavior(new ZoomInListenerImpl(mapControl)),
-			    new PointBehavior(new ZoomOutRightButtonListener(mapControl))
-   			}
-    	);
-        mapControl.addBehavior(
-        	"pan", 
-        	new MoveBehavior(
-       			new PanListenerImpl(mapControl)
-        	)
-        ); 
-    	mapControl.addBehavior(
-    		SHOWINFO_TOOL_NAME, 
-    		new PointBehavior(
-    				new PropertiesOfBlockListener()
-    		)
-    	);
-    	
+        mapControl.addBehavior("zoom", new Behavior[]{new RectangleBehavior(new ZoomInListenerImpl(mapControl)),
+                new PointBehavior(new ZoomOutRightButtonListener(mapControl))});
+        mapControl.addBehavior("pan", new MoveBehavior(new PanListenerImpl(mapControl)));
+        mapControl.addBehavior(SHOWINFO_TOOL_NAME, new PointBehavior(new PropertiesOfBlockListener()));
+
         mapControl.setTool("pan");
         mapControl.getMapContext().setProjection(CRSFactory.getCRS("EPSG:23030"));
-    	FLayer layer = MapContextLocator.getMapContextManager().createLayer(
-			    "Blocks", 
-			    manager.getBlocks()
-    	);
-    	mapControl.getMapContext().getLayers().addLayer(layer);
+        FLayer layer = MapContextLocator.getMapContextManager().createLayer("Blocks", manager.getBlocks());
+        mapControl.getMapContext().getLayers().addLayer(layer);
     }
 
     @SuppressWarnings("serial")
-	private void initGUI() {
+    private void initGUI() {
         JToolBar toolBar = new JToolBar();
-        toolBar.add(
-            	new JButton(
-    	       		new AbstractAction("Pan") {
-						public void actionPerformed(ActionEvent e) {
-    		                mapControl.setTool("pan");
-    		            }
-    		        }
-            	)
-            );
-        toolBar.add(
-            	new JButton(
-    	       		new AbstractAction("Zoom") {
-						public void actionPerformed(ActionEvent e) {
-    		                mapControl.setTool("zoom");
-    		            }
-    		        }
-            	)
-            );
-        toolBar.add(
-            	new JButton(
-    	       		new AbstractAction("Zoom all") {
-						public void actionPerformed(ActionEvent e) {
-    		                zoomAll();
-    		            }
-    		        }
-            	)
-            );
+        toolBar.add(new JButton(new AbstractAction("Pan"){
+            public void actionPerformed( ActionEvent e ) {
+                mapControl.setTool("pan");
+            }
+        }));
+        toolBar.add(new JButton(new AbstractAction("Zoom"){
+            public void actionPerformed( ActionEvent e ) {
+                mapControl.setTool("zoom");
+            }
+        }));
+        toolBar.add(new JButton(new AbstractAction("Zoom all"){
+            public void actionPerformed( ActionEvent e ) {
+                zoomAll();
+            }
+        }));
 
-        toolBar.add(
-            	new JButton(
-    	       		new AbstractAction("Info") {
-						public void actionPerformed(ActionEvent e) {
-    		            	mapControl.setTool(SHOWINFO_TOOL_NAME);;
-    		            }
-    		        }
-            	)
-            );
+        toolBar.add(new JButton(new AbstractAction("Info"){
+            public void actionPerformed( ActionEvent e ) {
+                mapControl.setTool(SHOWINFO_TOOL_NAME);;
+            }
+        }));
 
         frame = new JFrame("LandRegistryViewer example app");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setPreferredSize(new Dimension(400, 300));
         frame.add(toolBar, BorderLayout.PAGE_START);
-        frame.add(mapControl,BorderLayout.CENTER);
+        frame.add(mapControl, BorderLayout.CENTER);
         frame.pack();
         frame.setVisible(true);
     }
-    
+
     public void doMain() throws Exception {
-    	initBaseFolder();
-    	initLandRegistryViewer();
+        initBaseFolder();
+        initLandRegistryViewer();
         initMapControl();
         initGUI();
-    	zoomAll();
-    }
-    
-    private void zoomAll() {
-    	MapContext mapContext = mapControl.getMapContext(); 
-    	Envelope all = mapContext.getLayers().getFullEnvelope();
-    	mapContext.getViewPort().setEnvelope(all);
-    	mapContext.invalidate();
+        zoomAll();
     }
 
+    private void zoomAll() {
+        MapContext mapContext = mapControl.getMapContext();
+        Envelope all = mapContext.getLayers().getFullEnvelope();
+        mapContext.getViewPort().setEnvelope(all);
+        mapContext.invalidate();
+    }
 
 }
-
-
