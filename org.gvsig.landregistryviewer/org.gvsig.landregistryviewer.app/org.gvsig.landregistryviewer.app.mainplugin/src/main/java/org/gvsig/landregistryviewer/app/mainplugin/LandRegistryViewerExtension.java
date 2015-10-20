@@ -62,7 +62,7 @@ public class LandRegistryViewerExtension extends Extension {
     private static final String MY_VIEW_NAME = "_Land_registry_viewer";
 
     private static final String TOOL_NAME = "LandRegistryViewer.infotool";
-    private static final String ACTION_SETINFOTOOL = "view-show-land-regisytry-information";
+    private static final String ACTION_SETINFOTOOL = "view-show-land-registry-information";
 
     private LandRegistryViewerManager manager;
 
@@ -70,7 +70,7 @@ public class LandRegistryViewerExtension extends Extension {
 
     public void initialize() {
         // PluginsManager manager = PluginsLocator.getManager();
-        IconThemeHelper.registerIcon("action", "view-show-land-regisytry-information", this);
+        IconThemeHelper.registerIcon("action", "view-show-land-registry-information", this);
     }
 
     public void postInitialize() {
