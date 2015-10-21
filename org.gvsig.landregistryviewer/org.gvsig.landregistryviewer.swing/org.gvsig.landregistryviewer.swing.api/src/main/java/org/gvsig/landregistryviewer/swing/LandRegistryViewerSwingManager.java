@@ -23,16 +23,15 @@
  */
 package org.gvsig.landregistryviewer.swing;
 
+import org.gvsig.landregistryviewer.LandRegistryViewerBlock;
 import org.gvsig.landregistryviewer.LandRegistryViewerException;
 import org.gvsig.landregistryviewer.LandRegistryViewerManager;
-import org.gvsig.landregistryviewer.LandRegistryViewerBlock;
 
 /**
  * This class is responsible of the management of the library's swing user
  * interface. It is the swing library's main entry point, and provides all the
  * services to manage library swing components.
  * 
- * @see LandRegistryViewerWindowManager
  * @see LandRegistryViewerBlockJPanel
  * @author gvSIG team
  * @version $Id$
@@ -57,7 +56,7 @@ public interface LandRegistryViewerSwingManager {
      * Returns the {@link LandRegistryViewerManager}.
      * 
      * @return {@link LandRegistryViewerManager}
-     * @see {@link LandRegistryViewerManager}
+     * @see LandRegistryViewerManager
      */
     public LandRegistryViewerManager getManager();
 

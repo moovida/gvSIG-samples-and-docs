@@ -31,7 +31,7 @@ public interface LandRegistryViewerParcel {
      * Returns the {@link LandRegistryViewerManager}
      * 
      * @return {@link LandRegistryViewerManager}
-     * @see {@link LandRegistryViewerManager}
+     * @see LandRegistryViewerManager
      */
     public LandRegistryViewerManager getManager();
     

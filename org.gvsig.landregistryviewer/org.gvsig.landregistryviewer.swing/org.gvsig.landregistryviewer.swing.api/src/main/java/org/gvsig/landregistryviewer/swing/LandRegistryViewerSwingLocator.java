@@ -81,9 +81,9 @@ public class LandRegistryViewerSwingLocator extends BaseLocator {
     }
 
     /**
-     * Gets the instance of the {@link ScriptingUIManager} registered.
+     * Gets the instance of the manager registered.
      * 
-     * @return {@link ScriptingUIManager}
+     * @return the manager.
      */
     public static LandRegistryViewerSwingManager getSwingManager() {
         return (LandRegistryViewerSwingManager) getInstance().get(SWING_MANAGER_NAME);

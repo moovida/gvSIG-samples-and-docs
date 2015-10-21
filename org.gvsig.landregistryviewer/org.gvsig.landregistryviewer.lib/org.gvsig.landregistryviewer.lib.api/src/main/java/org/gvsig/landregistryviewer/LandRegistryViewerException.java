@@ -30,8 +30,8 @@ import org.gvsig.tools.exception.BaseException;
  * may be dealt by the program or the user of the program which is a client of
  * the LandRegistryViewer API.
  * 
- * @see {@link LandRegistryViewerBlock}
- * @see {@link LandRegistryViewerManager}
+ * @see LandRegistryViewerBlock
+ * @see LandRegistryViewerManager
  * @author gvSIG team.
  * @version $Id$
  */
@@ -67,7 +67,6 @@ public class LandRegistryViewerException extends BaseException {
     }
 
     /**
-     * @see BaseException#BaseException(String, String, long).
      * @param message
      *            the default messageFormat to describe the exception
      * @param key
@@ -80,7 +79,6 @@ public class LandRegistryViewerException extends BaseException {
     }
 
     /**
-     * @see BaseException#BaseException(String, Throwable, String, long).
      * @param message
      *            the default messageFormat to describe the exception
      * @param cause

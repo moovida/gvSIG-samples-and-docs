@@ -39,7 +39,7 @@ public interface LandRegistryViewerBlock {
      * Returns the {@link LandRegistryViewerManager}
      * 
      * @return {@link LandRegistryViewerManager}
-     * @see {@link LandRegistryViewerManager}
+     * @see LandRegistryViewerManager
      */
     public LandRegistryViewerManager getManager();
     
@@ -47,8 +47,6 @@ public interface LandRegistryViewerBlock {
      * Returns the LandRegistryViewer's shape of the block.
      * 
      * @return the shape associated to a LandRegistryViewerBlock as a Geometry
-     * @throws LandRegistryViewerMessageException
-     *             if there is an error getting the LandRegistryViewer's message
      */
     public Geometry getShape();
     
